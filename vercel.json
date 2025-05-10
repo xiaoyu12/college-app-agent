@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "app/**/*",
+        "src": "package.json",
         "use": "@vercel/next"
       }
     ],
@@ -13,7 +13,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "/app/$1"
+        "dest": "/"
       }
     ],
     "env": {
