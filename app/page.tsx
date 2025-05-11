@@ -64,8 +64,9 @@ export default function Home() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
+      alert(`Login failed: ${error.message}`);
     }
   };
 
@@ -73,8 +74,9 @@ export default function Home() {
   const handleLoginWithEmail = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
+      alert(`Login failed: ${error.message}`);
     }
   };
 
@@ -154,6 +156,13 @@ export default function Home() {
         <title>AI Chat App with CrewAI</title>
       </Head>
       <div className="container mx-auto p-4">
+        <div className="text-center mb-4">
+          <img
+            src="/images/banner.png" // Replace with the actual path to your image file, e.g., "/"
+            alt="AI Chat App Banner"
+            className="mx-auto w-1/2 rounded"
+          />
+        </div>
         {!user ? (
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">Welcome to AI Chat with CrewAI</h1>
@@ -162,27 +171,27 @@ export default function Home() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="p-2 border rounded mb-2 w-full"
+                className="p-2 border rounded mb-2"
                 placeholder="Email"
               />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="p-2 border rounded mb-2 w-full"
+                className="p-2 border rounded mb-2"
                 placeholder="Password"
               />
               {isRegistering ? (
                 <button
                   onClick={handleRegisterWithEmail}
-                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full"
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                 >
                   Register
                 </button>
               ) : (
                 <button
                   onClick={handleLoginWithEmail}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                 >
                   Login
                 </button>
@@ -191,7 +200,13 @@ export default function Home() {
                 onClick={() => setIsRegistering(!isRegistering)}
                 className="text-sm text-gray-500 mt-2"
               >
-                {isRegistering ? 'Already have an account? Login' : 'Don’t have an account? Register'}
+                {isRegistering ? (
+                  'Already have an account? Login'
+                ) : (
+                  <>
+                    Don’t have an account? <span className="font-bold">Register</span>
+                  </>
+                )}
               </button>
             </div>
             <button
